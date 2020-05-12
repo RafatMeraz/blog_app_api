@@ -3,7 +3,7 @@
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return 'Welcome to Blog API!';
 });
 
 $router->post('/signUp', 'UserController@signUp');

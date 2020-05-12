@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use App\UserModel;
 use App\FollowModel;
@@ -12,10 +13,11 @@ class UserController extends Controller
     // method for user sign up
     public function signUp(Request $request)
     {
-        $name = $request->input('name');
+        $name = trim($request->input('name'));
         $password = $request->input('password');
         $date_of_birth = $request->input('date_of_birth');
-        $email = $request->input('email');
+        $email = trim($request->input('email'));
+        // Checking email is exists or not
         $checkEmail = UserModel::where('email', $email)->count();
         if ($checkEmail <= 0) {
             $result = UserModel::insert([
@@ -25,9 +27,11 @@ class UserController extends Controller
                 'date_of_birth' => $date_of_birth,
             ]);
             if ($result) {
+                $token = $this->generateToken($email);
                 return response()->json([
                     'error' => false,
-                    'status' => 'Sign up successful!'
+                    'status' => 'Sign up successful!',
+                    'token' => $token
                 ]);
             } else {
                 return response()->json([
@@ -52,9 +56,11 @@ class UserController extends Controller
         $checkEmail = UserModel::where('email', $email)->first();
         if ($checkEmail) {
             if (Hash::check($password, $checkEmail->password)) {
+                $token = $this->generateToken($email);
                 return response()->json([
                     'error' => false,
-                    'status' => 'User login successful!'
+                    'status' => 'User login successful!',
+                    'token' => $token
                 ]);
             } else {
                 return response()->json([
@@ -144,4 +150,14 @@ class UserController extends Controller
 
         // write code for upload image
     }
+
+    private function generateToken($email){
+        $key = env('API_KEY');
+        $payload = array(
+            "email" => $email,
+            "com" => "pirox.com",
+        );
+        return JWT::encode($payload, $key);
+    }
+
 }
