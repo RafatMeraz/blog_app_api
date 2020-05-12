@@ -10,36 +10,34 @@ $router->post('/signUp', 'UserController@signUp');
 
 $router->post('/signIn', 'UserController@signIn');
 
-$router->post('/changePassword', 'UserController@changePassword');
+$router->post('/changePassword', ['middleware'=> 'auth','uses'=> 'UserController@changePassword']);
 
-$router->post('/changeUsername', 'UserController@changeUserName');
+$router->post('/changeUsername', ['middleware'=> 'auth','uses'=> 'UserController@changeUserName']);
 
-$router->post('/userDetails', 'UserController@getUserDetails');
+$router->post('/userDetails', ['middleware'=>'auth', 'uses'=>'UserController@getUserDetails']);
 
-$router->post('/categories', 'PostController@getAllCategories');
+$router->post('/categories', ['middleware'=>'auth', 'uses'=> 'PostController@getAllCategories']);
 
-$router->post('/getPosts', 'PostController@getPosts');
+$router->post('/getPosts', ['middleware'=>'auth', 'uses'=> 'PostController@getPosts']);
 
-$router->post('/getUserPosts', 'PostController@getUserPosts');
+$router->post('/getUserPosts', ['middleware'=>'auth', 'uses'=> 'PostController@getUserPosts']);
 
-$router->post('/postNewBlog', 'PostController@postNewBlog');
+$router->post('/postNewBlog', ['middleware'=>'auth', 'uses'=> 'PostController@postNewBlog']);
 
-$router->post('/getAllFavourites', 'FavouriteController@getAllFavourites');
+$router->post('/getAllFavourites', ['middleware'=>'auth', 'uses'=> 'FavouriteController@getAllFavourites']);
 
-$router->post('/addToFavourite', 'FavouriteController@postNewBlog');
+$router->post('/addToFavourite', ['middleware'=>'auth', 'uses'=> 'FavouriteController@postNewBlog']);
 
-$router->post('/removeFromFavourite', 'FavouriteController@removeFromFavourite');
+$router->post('/removeFromFavourite', ['middleware'=>'auth', 'uses'=> 'FavouriteController@removeFromFavourite']);
 
-$router->post('/getUserAllLikes', 'LikeController@getUserAllLikes');
+$router->post('/getUserAllLikes', ['middleware'=>'auth', 'uses'=> 'LikeController@getUserAllLikes']);
 
-$router->post('/addToLike', 'LikeController@addToLike');
+$router->post('/addToLike', ['middleware'=>'auth', 'uses'=> 'LikeController@addToLike']);
 
-$router->post('/removeFromFavourite', 'LikeController@removeFromFavourite');
+$router->post('/removeFromFavourite', ['middleware'=>'auth', 'uses'=> 'LikeController@removeFromFavourite']);
 
-$router->post('/getUserFollowingList', 'FollowController@getUserFollowingList');
+$router->post('/getUserFollowingList', ['middleware'=>'auth', 'uses'=> 'FollowController@getUserFollowingList']);
 
-$router->post('/getUserFollowersList', 'FollowController@getUserFollowersList');
+$router->post('/getUserFollowersList', ['middleware'=>'auth', 'uses'=> 'FollowController@getUserFollowersList']);
 
-$router->post('/followUser', 'FollowController@followUser');
-
-
+$router->post('/followUser', ['middleware'=>'auth', 'uses'=> 'FollowController@followUser']);

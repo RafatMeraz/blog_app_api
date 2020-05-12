@@ -31,7 +31,7 @@ class UserController extends Controller
                 return response()->json([
                     'error' => false,
                     'status' => 'Sign up successful!',
-                    'token' => $token
+                    'api_token' => $token
                 ]);
             } else {
                 return response()->json([
@@ -60,7 +60,7 @@ class UserController extends Controller
                 return response()->json([
                     'error' => false,
                     'status' => 'User login successful!',
-                    'token' => $token
+                    'api_token' => $token
                 ]);
             } else {
                 return response()->json([
@@ -152,7 +152,7 @@ class UserController extends Controller
     }
 
     private function generateToken($email){
-        $key = env('API_KEY');
+        $key = env('TOKEN_KEY');
         $payload = array(
             "email" => $email,
             "com" => "pirox.com",
